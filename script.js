@@ -10,9 +10,9 @@ const toggleButton = document.getElementById("toggleMusic");
 const revealItems = document.querySelectorAll(".reveal");
 const petalStream = document.querySelector(".petal-stream");
 
-const AUDIO_TARGET_VOLUME = 0.18;
+const AUDIO_TARGET_VOLUME = 0.15;
 
-const fadeInAudio = (targetVolume = AUDIO_TARGET_VOLUME, duration = 1600) => {
+const fadeInAudio = (targetVolume = AUDIO_TARGET_VOLUME, duration = 3000) => {
   if (!audio) return;
   const startTime = performance.now();
   const initialVolume = 0;

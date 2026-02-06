@@ -135,8 +135,8 @@ img {
 
 .gallery__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
   max-width: var(--max-width);
   margin: 0 auto;
 }
@@ -148,6 +148,7 @@ img {
   box-shadow: var(--shadow);
   transform: translateY(10px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 1 / 1;
 }
 
 .gallery__item:hover {
@@ -157,7 +158,7 @@ img {
 
 .gallery__item img {
   width: 100%;
-  height: 200px;
+  height: 100px;
   object-fit: cover;
 }
 
@@ -208,7 +209,7 @@ img {
   position: absolute;
   top: -15vh;
   left: 0; /* Añadir esto */
-  width: clamp(18px, 3.8vw, 34px);
+  width: clamp(32px, 5.5vw, 34px);
   height: auto;
   opacity: 0.85;
   animation: fall linear forwards;
@@ -253,7 +254,14 @@ img {
 
 @media (max-width: 520px) {
   .petal {
-    width: clamp(16px, 5.5vw, 28px);
+    width: clamp(40px, 8vw, 50px);
     opacity: 0.5;
   }
 }
+@media (max-width: 520px) {
+  .gallery__grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+}
+
