@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SELENA</title>
+    <meta
+      name="description"
+      content="Dedicatoria romántica de una sola página para el 14 de febrero."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="petal-stream"></div>
+    <header class="hero" id="inicio">
+      <div class="hero__glow"></div>
+      <div class="hero__content fade-in">
+        <p class="hero__eyebrow">para mi carmen</p>
+        <h1 class="hero__title">Para ti, que iluminas mis días</h1>
+        <p class="hero__subtitle">
+          Gracias por ser mi lugar favorito. Cada instante contigo convierte lo
+          cotidiano en algo inolvidable.
+        </p>
+        <div class="hero__actions">
+          <button class="btn" id="toggleMusic" type="button" aria-pressed="false">
+            Reproducir música
+          </button>
+          <span class="hero__note">Toca para activar el audio</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="gallery" id="galeria">
+        <div class="section__header fade-in">
+          <h2>Nuestros recuerdos</h2>
+          <p>Momentos que guardo con cariño y que siempre me hacen sonreír.</p>
+        </div>
+        <div class="gallery__grid">
+          <figure class="gallery__item reveal">
+            <img src="Imagenes/Foto-1.png" alt="Recuerdo especial 1" />
+          </figure>
+          <figure class="gallery__item reveal">
+            <img src="Imagenes/Foto-2.png" alt="Recuerdo especial 2" />
+          </figure>
+          <figure class="gallery__item reveal">
+            <img src="Imagenes/Foto-3.png" alt="Recuerdo especial 3" />
+          </figure>
+          <figure class="gallery__item reveal">
+            <img src="Imagenes/Foto-4.png" alt="Recuerdo especial 4" />
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Con todo mi cariño, hoy y siempre.</p>
+    </footer>
+
+    <audio id="bgAudio" src="audio/audio.mp3" preload="auto"></audio>
+    <script src="script.js"></script>
+  </body>
+</html>
