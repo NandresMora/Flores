@@ -22,15 +22,19 @@
       <div class="hero__glow"></div>
       <div class="hero__content fade-in">
         <p class="hero__eyebrow">FELIZ  DIA DEL AMOR Y AMISTAD</p>
-        <h1 class="hero__title">Para ti, que iluminas con tu sonrisa los dias mas nublados </h1>
+        
+        <h1 class="hero__title" data-text="Para ti, que iluminas con tu sonrisa los dias mas nublados"></h1>
+        
         <p class="hero__subtitle">
           
         </p>
+
+
         <div class="hero__actions">
           <button class="btn" id="toggleMusic" type="button" aria-pressed="false">
-            Reproducir música
+            ❤️ Reproducir música
           </button>
-          <span class="hero__note">Escucha esta cancion</span>
+          <span class="hero__note">Te dedico esta cancion</span>
         </div>
       </div>
     </header>
@@ -64,5 +68,11 @@
 
     <audio id="bgAudio" src="audio/audio.mp3" preload="auto"></audio>
     <script src="script.js"></script>
+
+        <!-- Modal Lightbox -->
+    <div id="lightbox" class="lightbox">
+      <span class="lightbox__close">&times;</span>
+      <img class="lightbox__content" id="lightbox-img" src="" alt="Vista ampliada">
+    </div>
   </body>
 </html>

@@ -1,6 +1,6 @@
 // ==========================================================================
 // 14 de Febrero | Interacciones
-// - Control de música (fade-in)
+// - Control de música (fade-in) + Explosión de corazones
 // - Animaciones simples al hacer scroll
 // - Lluvia de girasoles y lirios
 // ==========================================================================
@@ -11,6 +11,35 @@ const revealItems = document.querySelectorAll(".reveal");
 const petalStream = document.querySelector(".petal-stream");
 
 const AUDIO_TARGET_VOLUME = 0.15;
+
+// --- Función de Explosión de Corazones ---
+const createHeartExplosion = (element) => {
+  const rect = element.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+
+  // Crear 15 corazones
+  for (let i = 0; i < 15; i++) {
+    const heart = document.createElement('span');
+    heart.innerHTML = '❤️';
+    heart.className = 'heart-particle';
+    document.body.appendChild(heart);
+
+    // Calcular dirección aleatoria hacia afuera
+    const angle = Math.random() * Math.PI * 2;
+    const velocity = 50 + Math.random() * 100; // Distancia
+    const tx = Math.cos(angle) * velocity;
+    const ty = Math.sin(angle) * velocity;
+
+    heart.style.left = `${centerX}px`;
+    heart.style.top = `${centerY}px`;
+    heart.style.setProperty('--tx', `${tx}px`);
+    heart.style.setProperty('--ty', `${ty}px`);
+
+    // Eliminar elemento después de la animación
+    heart.addEventListener('animationend', () => heart.remove());
+  }
+};
 
 const fadeInAudio = (targetVolume = AUDIO_TARGET_VOLUME, duration = 3000) => {
   if (!audio) return;
@@ -35,6 +64,11 @@ const fadeInAudio = (targetVolume = AUDIO_TARGET_VOLUME, duration = 3000) => {
 const toggleMusic = async () => {
   if (!audio) return;
 
+  // Llamamos a la explosión de corazones en cada clic
+  if (toggleButton) {
+    createHeartExplosion(toggleButton);
+  }
+
   if (audio.paused) {
     try {
       await audio.play();
@@ -46,7 +80,7 @@ const toggleMusic = async () => {
     }
   } else {
     audio.pause();
-    toggleButton.textContent = "Reproducir música";
+    toggleButton.textContent = "❤️ Reproducir música";
     toggleButton.setAttribute("aria-pressed", "false");
   }
 };
@@ -88,7 +122,7 @@ const createPetal = (index) => {
   const startX = Math.random() * 100;
   const drift = (Math.random() * 16 - 8).toFixed(2);
   const duration = (12 + Math.random() * 8).toFixed(2);
-  const rotation = (Math.random() * 360).toFixed(0); // Mejor rango de rotación
+  const rotation = (Math.random() * 360).toFixed(0);
   const delay = (Math.random() * duration).toFixed(2);
 
   petal.src = src;
@@ -131,6 +165,38 @@ const initPetals = () => {
   }, interval);
 };
 
+// ==========================================================================
+// Efecto Máquina de Escribir (Mejorado: Cursor se elimina al terminar)
+// ==========================================================================
+const typeWriterEffect = (element, speed = 100) => {
+  const text = element.getAttribute("data-text");
+  if (!text) return;
+  
+  element.innerHTML = "";
+  let i = 0;
+  
+  function type() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    } else {
+      // Texto terminado: Añadimos cursor brevemente
+      const cursor = document.createElement("span");
+      cursor.innerHTML = "|";
+      cursor.style.animation = "blink 1s infinite";
+      cursor.className = "cursor-blink";
+      element.appendChild(cursor);
+      
+      // Eliminamos el cursor después de 500ms para que no quede parpadeando
+      setTimeout(() => {
+        cursor.remove();
+      }, 500);
+    }
+  }
+  type();
+};
+
 const initPage = () => {
   if (toggleButton) {
     toggleButton.addEventListener("click", toggleMusic);
@@ -138,6 +204,12 @@ const initPage = () => {
 
   if (revealItems.length > 0) {
     initScrollReveal();
+  }
+  
+  const heroTitle = document.querySelector(".hero__title");
+  if (heroTitle) {
+    // Pequeño delay para esperar la animación de entrada
+    setTimeout(() => typeWriterEffect(heroTitle), 500);
   }
 
   initPetals();
@@ -147,4 +219,37 @@ if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initPage);
 } else {
   initPage();
+}
+
+// ==========================================================================
+// Lógica del Lightbox (Visor de fotos)
+// ==========================================================================
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeBtn = document.querySelector('.lightbox__close');
+
+// Solo ejecutar si existen los elementos (por si no agregaste el HTML del lightbox aun)
+if (lightbox && lightboxImg) {
+  // Abrir Lightbox
+  document.querySelectorAll('.gallery__item img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightbox.classList.add('active');
+      lightboxImg.src = img.src;
+    });
+  });
+
+  // Cerrar Lightbox
+  const closeLightbox = () => lightbox.classList.remove('active');
+
+  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === "Escape" && lightbox.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
 }
