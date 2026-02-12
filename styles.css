@@ -344,37 +344,44 @@ img {
     opacity: 0;
   }
 }
+
+
 /* ==========================================================================
-   ARREGLOS MÓVILES (Corregir visualización en celular)
+   ARREGLOS MÓVILES DEFINITIVOS (Corrección de visibilidad)
    ========================================================================== */
 
-/* 1. Corrección para Explosión de Corazones (Z-Index) */
-/* Forzamos a que los corazones estén por encima de las flores (z-index: 9999) */
-.heart-particle {
-  z-index: 10000 !important; /* Asegura que esté por encima de todo */
-  pointer-events: none;       /* Asegura que no bloquee clicks */
-  will-change: transform, opacity; /* Mejora rendimiento en móviles */
-}
-
-/* 2. Corrección para Máquina de Escribir en Móvil */
 @media (max-width: 768px) {
   
-  /* Ajustamos el título para que tenga espacio suficiente */
+  /* --- 1. ARREGLO MÁQUINA DE ESCRIBIR --- */
   .hero__title {
-    font-size: 1.8rem; /* Reducimos un poco para que quepa mejor */
-    line-height: 1.4;
-    min-height: 80px; /* Le damos altura mínima para evitar cortes */
-    word-wrap: break-word; /* Permite partir palabras largas si es necesario */
+    font-size: 1.6rem; /* Tamaño legible */
+    line-height: 1.5;
+    min-height: 100px; /* Evita que se corte si son muchas líneas */
+    word-wrap: break-word; 
+    z-index: 2; /* Asegura capa */
+    position: relative;
   }
 
-  /* Hacemos el cursor más visible y mejor integrado en móvil */
+  /* Cursor simplificado y garantizado para móviles */
   .cursor-blink {
     display: inline-block;
-    width: 2px;
-    height: 1.2em;
-    background-color: var(--accent); /* Usamos el color de acento */
-    vertical-align: text-bottom;
+    /* Eliminamos width fijo para que el carácter "|" se vea bien */
+    font-weight: bold; 
+    color: var(--accent); 
     margin-left: 2px;
-    animation: blink 1s step-end infinite; /* Animación más nítida */
+    animation: blink 1s step-end infinite;
   }
+}
+
+/* --- 2. ARREGLO CORAZONES (Explosión) --- */
+/* IMPORTANTE: Usamos position: fixed para asegurar que flote 
+   por encima de TODOS los elementos (incluidas las flores) en móvil */
+.heart-particle {
+  position: fixed !important; /* Clave: Fijo a la pantalla, no al documento */
+  top: 0;
+  left: 0;
+  z-index: 99999 !important; /* Clave: Capa máxima */
+  pointer-events: none;
+  font-size: 24px !important; /* Un poco más grande en móvil */
+  will-change: transform, opacity;
 }
