@@ -344,3 +344,37 @@ img {
     opacity: 0;
   }
 }
+/* ==========================================================================
+   ARREGLOS MÓVILES (Corregir visualización en celular)
+   ========================================================================== */
+
+/* 1. Corrección para Explosión de Corazones (Z-Index) */
+/* Forzamos a que los corazones estén por encima de las flores (z-index: 9999) */
+.heart-particle {
+  z-index: 10000 !important; /* Asegura que esté por encima de todo */
+  pointer-events: none;       /* Asegura que no bloquee clicks */
+  will-change: transform, opacity; /* Mejora rendimiento en móviles */
+}
+
+/* 2. Corrección para Máquina de Escribir en Móvil */
+@media (max-width: 768px) {
+  
+  /* Ajustamos el título para que tenga espacio suficiente */
+  .hero__title {
+    font-size: 1.8rem; /* Reducimos un poco para que quepa mejor */
+    line-height: 1.4;
+    min-height: 80px; /* Le damos altura mínima para evitar cortes */
+    word-wrap: break-word; /* Permite partir palabras largas si es necesario */
+  }
+
+  /* Hacemos el cursor más visible y mejor integrado en móvil */
+  .cursor-blink {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: var(--accent); /* Usamos el color de acento */
+    vertical-align: text-bottom;
+    margin-left: 2px;
+    animation: blink 1s step-end infinite; /* Animación más nítida */
+  }
+}
